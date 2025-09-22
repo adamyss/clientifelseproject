@@ -1,12 +1,20 @@
+/*
+Adam Ruzicka
+9/22/2025
+Client project
+*/
 #include <iostream>
 #include <string>
 #include <ctime>
 using namespace std;
+
+// enum for which topic you chose
   enum topic{
       math,
       english,
       spanish  
     };
+  // initilizing questions and answers
     string mathQuestions[] = {"What is 5 + 3?",
   "What is 7 * 8?",
   "What is 12 - 4?",
@@ -159,6 +167,7 @@ using namespace std;
     "red",
     "arbol"
 };
+// function to give user a question based off which topic they chose and a number (preferbally random)
 string generateQuestion(int number,topic top){
      if(top == math){
         return mathQuestions[number];
@@ -169,6 +178,7 @@ string generateQuestion(int number,topic top){
     }
 
 }
+// function to give user an answer based off which topic they chose and a number (preferbally random)
 string generateSolution(int number,topic top){
        if(top == math){
         return mathAnswers[number];
@@ -180,18 +190,22 @@ string generateSolution(int number,topic top){
 }
 int main()
 {
+  // seeding random
     srand(time(0));
+    // initilizing variables
     int questionAmount = 0;
     int correct = 0;
     string input = "";
     topic chosenTopic = math;
     int arrayLength = 25;
+    // asks user how many questions they want and what topic they want
     cout << "How many questions would you like to be asked" << endl;
     cin >> questionAmount;
     cin.ignore();
     cout << "What topic would you like math english or spanish (plz type in all lowercase)?" << endl;
     cin >> input;
     cin.ignore();
+    // sets the users topic based off their input
     if(input == "math"){
         chosenTopic = math;
     } else if(input == "english"){
@@ -199,19 +213,27 @@ int main()
     } else{
         chosenTopic = spanish;
     }
+    // runs a forloop for each question
     for (int i = 0; i < questionAmount; i++){
+      // gets random number
          int num = rand() % (arrayLength - 0 + 1) + 0;
+         // gives a question to the user
         cout << generateQuestion(num,chosenTopic) << " Please type in all lowercase" << endl;
+        // gets users answer
         cin >> input;
         cin.ignore();
         string solution = generateSolution(num,chosenTopic);
+        // checks if the user answered the question right and responds accordingly
         if (input == solution){
+          // adds 1 to the correct answer check if they were right
             correct += 1;
             cout << "YOU GOT THE ANSWER CORRECT" << endl;
         } else{
+          // tells the user the correct answer if they were wrong
             cout << "YOU GOT THE QUESTION WRONG D: the correct answer was: " << solution << endl;
         }
     }
+    // gives user their final score
     cout << "OUT OF " << questionAmount << " QUESTIONS, YOU GOT " << correct <<" ANSWERS CORRECT";
     return 0;
 }
